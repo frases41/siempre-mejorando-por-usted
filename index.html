@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Carta de Amor - 2025</title>
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Playfair+Display:wght@700&family=Poppins:wght@400;500&display=swap" rel="stylesheet" />
+
+    <style>
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      body {
+        font-family: 'Poppins', sans-serif;
+        background: #fffaf9;
+        color: #555;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding: 20px;
+        overflow-x: hidden;
+        position: relative;
+        filter: saturate(1.6);
+      }
+
+      /* Animación de borde brillante */
+      @keyframes rainbowGlow {
+        0% { box-shadow: 0 0 18px rgba(255, 0, 255, 0.7), 0 0 25px rgba(255, 100, 255, 0.6); }
+        33% { box-shadow: 0 0 18px rgba(255, 100, 255, 0.7), 0 0 25px rgba(255, 0, 255, 0.6); }
+        66% { box-shadow: 0 0 18px rgba(255, 0, 255, 0.7), 0 0 25px rgba(100, 0, 255, 0.6); }
+        100% { box-shadow: 0 0 18px rgba(255, 0, 255, 0.7), 0 0 25px rgba(255, 100, 255, 0.6); }
+      }
+      .glow-frame {
+        position: relative;
+        display: inline-block;
+        border-radius: 18px;
+        margin: 1.4rem 0;
+        animation: rainbowGlow 2s ease-in-out infinite alternate;
+        padding: 3px;
+        background: linear-gradient(45deg, #ff00ff, #ff00cc, #ff66ff, #ff33ff);
+        overflow: visible;
+      }
+      .glow-frame img {
+        border-radius: 15px;
+        display: block;
+        width: 100%;
+        height: auto;
+        border: 4px solid #fff;
+        transition: transform 0.3s ease;
+      }
+      .glow-frame img:hover { transform: scale(1.03); }
+
+      /* Pantalla de bloqueo */
+      .lock-screen {
+        text-align: center;
+        padding: 2rem;
+        max-width: 440px;
+        background: rgba(255, 255, 255, 0.95);
+        border-radius: 24px;
+        box-shadow: 0 6px 25px rgba(142, 36, 170, 0.1);
+        border: 1px solid #ddd;
+        position: relative;
+        z-index: 1;
+      }
+      .lock-screen h2 {
+        font-family: 'Playfair Display', serif;
+        font-size: 2rem;
+        color: #6a1b9a;
+        margin: 1.2rem 0;
+        text-shadow: 0 0 8px rgba(255, 0, 255, 0.2);
+      }
+      .key-display {
+        font-family: 'Poppins', monospace;
+        font-size: 1.8rem;
+        color: #8e24aa;
+        background: #fdfcff;
+        padding: 1rem 1.3rem;
+        border-radius: 12px;
+        margin: 1.3rem auto;
+        width: 90%;
+        border: 1px solid #d0d0ff;
+        letter-spacing: 5px;
+      }
+      .keypad {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 14px;
+        margin: 1.4rem 0;
+      }
+      .key {
+        font-size: 1.45rem;
+        font-weight: 600;
+        padding: 1.1rem 0;
+        background: #f8f4ff;
+        color: #8e24aa;
+        border: 1px solid #d0d0ff;
+        border-radius: 12px;
+        cursor: pointer;
+        transition: all 0.2s ease;
+      }
+      .key:hover { background: #f0e6ff; transform: translateY(-4px); }
+      .btn-iniciar {
+        margin-top: 1.6rem;
+        padding: 1rem 2.2rem;
+        font-size: 1.3rem;
+        font-weight: 600;
+        background: linear-gradient(45deg, #9c27b0, #d060ff);
+        color: white;
+        border: none;
+        border-radius: 30px;
+        cursor: pointer;
+      }
+
+      /* Carta */
+      .main-container { display: none; text-align: center; max-width: 95%; padding: 2rem 1.6rem; }
+      .letter-frame {
+        background: rgba(255, 255, 255, 0.98);
+        border-radius: 24px;
+        padding: 2.2rem 1.8rem;
+        box-shadow: 0 8px 30px rgba(142, 36, 170, 0.18);
+        margin-bottom: 1.8rem;
+      }
+      h1 {
+        font-family: 'Playfair Display', serif;
+        font-size: 2.3rem;
+        background: linear-gradient(45deg, #9c27b0, #d060ff);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        margin-bottom: 1.5rem;
+      }
+      .letter {
+        font-family: 'Dancing Script', cursive;
+        font-size: 1.6rem;
+        line-height: 1.9;
+        color: #6a1b9a;
+        text-align: left;
+        white-space: pre-line;
+      }
+      footer {
+        margin-top: 1.6rem;
+        font-style: italic;
+        color: #9c27b0;
+      }
+      .credit {
+        margin-top: 1.6rem;
+        font-size: 0.75rem;
+        color: #aaa;
+        font-style: italic;
+      }
+      .credit strong { color: #9c27b0; font-weight: 600; }
+
+      /* Corazones flotantes */
+      .floating-heart {
+        position: fixed;
+        font-size: 22px;
+        pointer-events: none;
+        opacity: 0;
+        z-index: 1000;
+        animation: floatUp 14s ease-out forwards, pulseHeart 3s ease-in-out infinite;
+      }
+      @keyframes floatUp {
+        0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+        10% { opacity: 0.9; }
+        90% { opacity: 0.9; }
+        100% { transform: translateY(-20vh) rotate(360deg); opacity: 0; }
+      }
+      @keyframes pulseHeart { 0%,100% {transform: scale(1);} 50% {transform: scale(1.15);} }
+    </style>
+  </head>
+  <body>
+
+    <!-- Pantalla de bloqueo -->
+    <div id="lockScreen" class="lock-screen">
+      <h2>🔐 Un mensajito para usted</h2>
+      <p>👇INGRESA EL CÓDIGO DE ACCESO 👇</p>
+
+      <div class="glow-frame">
+        <img src="https://media2.giphy.com/media/Y62ofc4S1Vst2/giphy.gif" alt="Corazones flotando" />
+      </div>
+
+      <div id="display" class="key-display"></div>
+
+      <div class="keypad">
+        <div class="key" onclick="addDigit('1')">1</div>
+        <div class="key" onclick="addDigit('2')">2</div>
+        <div class="key" onclick="addDigit('3')">3</div>
+        <div class="key" onclick="addDigit('4')">4</div>
+        <div class="key" onclick="addDigit('5')">5</div>
+        <div class="key" onclick="addDigit('6')">6</div>
+        <div class="key" onclick="addDigit('7')">7</div>
+        <div class="key" onclick="addDigit('8')">8</div>
+        <div class="key" onclick="addDigit('9')">9</div>
+        <div class="key" onclick="addDigit('0')">0</div>
+        <div class="key" onclick="clearInput()">⌫</div>
+        <div class="key" onclick="clearInput()">Limpiar</div>
+      </div>
+
+      <button class="btn-iniciar" onclick="submitKey()">Iniciar</button>
+
+      <div class="glow-frame">
+        <img src="https://media0.giphy.com/media/11TyfGbDbBv4be/giphy.gif" alt="Bailarina de amor" />
+      </div>
+    </div>
+
+    <!-- Carta principal -->
+    <div id="mainContainer" class="main-container">
+      <div class="letter-frame">
+        <h1>Para Mirian Campos Vasquez ❤️</h1>
+        <div id="letter" class="letter"></div>
+        <footer>Cada día mejorando para usted.</footer>
+      </div>
+
+      <!-- GIF decorativo -->
+      <div class="glow-frame" style="margin-top: 1.6rem;">
+        <img src="https://media0.giphy.com/media/11TyfGbDbBv4be/giphy.gif" alt="Bailarina de amor" />
+      </div>
+
+      <!-- Crédito -->
+      <p class="credit">By <strong>Eyner</strong></p>
+    </div>
+
+    <script>
+      // Contraseña
+      let input = '';
+      const correctKey = '2025';
+
+      function addDigit(digit) {
+        if (input.length < 4) { input += digit; updateDisplay(); }
+      }
+      function clearInput() { input = ''; updateDisplay(); }
+      function updateDisplay() { document.getElementById('display').textContent = input; }
+
+      function submitKey() {
+        if (input === correctKey) {
+          document.getElementById('lockScreen').style.display = 'none';
+          document.getElementById('mainContainer').style.display = 'block';
+          typeWriter(); createHearts();
+        } else { alert('❌ Código incorrecto. Intenta de nuevo.'); clearInput(); }
+      }
+
+      // Escribir la carta
+      function typeWriter() {
+        const letterElement = document.getElementById('letter');
+        letterElement.textContent = '';
+        const message = `Tus ojos son un universo en el que me quiero perder;
+tu sonrisa es la clave de mi alegría.
+Por todo ello, no quiero que te vayas de mi vida.`;
+        let i = 0; const speed = 40;
+        function type() {
+          if (i < message.length) {
+            letterElement.textContent += message.charAt(i);
+            i++; setTimeout(type, speed);
+          }
+        }
+        setTimeout(type, 300);
+      }
+
+      // Corazones flotando
+      function createHearts() {
+        const hearts = ['❤️','💖','💕','💓','💗','💞','💘'];
+        setInterval(() => {
+          const heart = document.createElement('div');
+          heart.className = 'floating-heart';
+          heart.textContent = hearts[Math.floor(Math.random() * hearts.length)];
+          heart.style.left = Math.random() * 90 + 5 + 'vw';
+          heart.style.bottom = '0';
+          document.body.appendChild(heart);
+          setTimeout(() => { heart.remove(); }, 18000);
+        }, 2800);
+      }
+    </script>
+  </body>
+</html>
